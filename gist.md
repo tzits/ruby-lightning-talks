@@ -8,6 +8,10 @@ The power of api requests made easy with HTTP Party!
 <li> Making life easy with apis!
 <li> JSON on JSON on JSON!
 
+## Why use HTTP Party
+
+From Treehouse: *"When you’re developing with Ruby, it’s pretty inevitable that at some point you come across an HTTP API that doesn’t have a gem available. While writing Hopefully Sunny I ran into just that situation with World Weather Online’s weather API. It’s often really tempting to go searching for a different API to use instead, but it’s actually not so hard to just write your own wrapper library. Let’s take a look at one of my favorite libraries for working with HTTP APIs, HTTParty, and in the process we’ll figure out how to write our own simple API wrapper libraries."*
+
 ## Demo the awesomeness of this gem!
 
 <li> httparty "https://api.stackexchange.com/2.2/questions?site=stackoverflow"
@@ -53,7 +57,7 @@ puts Twitter.post('/statuses/update.json', :query => {:status => "It's an HTTPar
 
 Just do: *gem install httparty*
 
-If you want to use in a rails app be sure to add the gem to your gemfile. 
+If you want to use in a rails app be sure to add the gem to your gemfile.
 
 ## Resources
 
