@@ -1,65 +1,66 @@
-# HTTP Party
+# GEOCODER
 
 The power of api requests made easy with HTTP Party!
 
-## Whats So Great About HTTP Party
+## Whats So Great About GEOCODER
 
-<li> Setting all the headers!
-<li> Making life easy with apis!
-<li> JSON on JSON on JSON!
+<li> Easily converts from address to long and lat
+<li> It allows for easy integration with Googlemaps API
+<li> Also comes with reverse_geocode functionality
 
-## Why use HTTP Party
+## Why use Geocoder
 
-From Treehouse: *"When you’re developing with Ruby, it’s pretty inevitable that at some point you come across an HTTP API that doesn’t have a gem available. While writing Hopefully Sunny I ran into just that situation with World Weather Online’s weather API. It’s often really tempting to go searching for a different API to use instead, but it’s actually not so hard to just write your own wrapper library. Let’s take a look at one of my favorite libraries for working with HTTP APIs, HTTParty, and in the process we’ll figure out how to write our own simple API wrapper libraries."*
-
+Geocoder is a complete geocoding solution for Ruby. With Rails, it adds geocoding (by street or IP address), reverse geocoding (finding street address based on given coordinates), and distance queries. It's as simple as calling geocode on your objects, and then using a scope like Venue.near("Billings, MT").
 ## Demo the awesomeness of this gem!
-
-<li> httparty "https://api.stackexchange.com/2.2/questions?site=stackoverflow"
-<li> httparty "http://food2fork.com/api/search?key=ac89596132bf565718f0859218dadf7f&q=shredded%20cheese"
 
 ## Examples
 
 Need to send authorization tokes and ids?!
 
 ```Ruby
-auth = {
-  user_id: "dt_SAMPLETOKENd88ffc342dde5c195df4019f90d6ed",
-  token: "super_s3cr3t_h@$hed_t0k3n_h3Re"
-}
-options = { basic_auth: auth }
+class Person < ApplicationRecord
+  geocoded_by :full_street_address
+  after_validation :geocode
 
-result = HTTParty.get("https://api.stackexchange.com/2.2/questions?site=stackoverflow", options)
+  def full_street_address
+    [address,city,state,zipcode].join(', ')
+  end
+end
 ```
 
 **Or**
 
 ```Ruby
-  key = "ac89596132bf565718f0859218dadf7f"
-
-  HTTParty.get("http://food2fork.com/api/search?key=" + key + "&q=shredded%20cheese")
+  create_table "people", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "latitude"
+    t.float    "longitude"
+  end
 ```
 
-**Finally the official setup in RoR**
+**Or if you want to get fancy**
 
 ```Ruby
-require 'httparty'
+<div> <%= image_tag "http://maps.googleapis.com/maps/api/staticmap?center=#{@person.latitude},#{@person.longitude}
+&markers=#{@person.latitude},#{@person.longitude}&zoom=12&size=640x400&key=AIzaSyA4BHW3txEdqfxzdTlPwaHsYRSZbfeIcd8",
+              class: 'img-fluid img-rounded', alt: "#{@person.first_name} on the map"%></div>
 
-class Twitter
-  include HTTParty
-  base_uri 'twitter.com'
-  basic_auth 'username', 'password'
-end
-
-puts Twitter.post('/statuses/update.json', :query => {:status => "It's an HTTParty and everyone is invited!"}).inspect
 ```
 
 ## Setup?
 
-Just do: *gem install httparty*
+Just do: *gem install geocoder*
 
 If you want to use in a rails app be sure to add the gem to your gemfile.
 
 ## Resources
 
-<li> [Github and Docs](https://github.com/jnunemaker/httparty)
-<li> [Treehouse Blog About Setup](http://blog.teamtreehouse.com/its-time-to-httparty)
+<li> [Github and Docs](https://github.com/alexreisner/geocoder)
+<li> [Site devoted to setup and advance function](http://www.rubygeocoder.com/)
